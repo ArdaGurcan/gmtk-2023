@@ -9,8 +9,8 @@ public class MushroomBounce : MonoBehaviour
     Vector3 p_pos;
     Vector3 mushroom_top;
 
-    GameObject player;
-    private string p_name;
+    public GameObject player;
+    private string p_tag;
 
     public int jump_multiplier = 2;
     private float jumpForce;
@@ -18,8 +18,7 @@ public class MushroomBounce : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        p_name = "Player";
-        player = GameObject.FindWithTag(p_name);
+        p_tag = player.tag;
         p_pos = player.transform.position;
         p_controller = player.GetComponent<CharacterController2D>();
         jumpForce = p_controller.m_JumpForce;
@@ -38,14 +37,14 @@ public class MushroomBounce : MonoBehaviour
         Vector3 delta_pos = p_pos - mushroom_top;
 
         // Check if player is above mushroom during collision
-        if(col.gameObject.tag.Equals(p_name) && delta_pos.y > 0) {
+        if(col.gameObject.tag.Equals(p_tag) && delta_pos.y > 0) {
             p_controller.m_JumpForce *= jump_multiplier;
             animator.SetBool("Bounce", true);
         }
     }
 
     private void OnCollisionExit2D(Collision2D col){
-        if(col.gameObject.tag.Equals(p_name)) {
+        if(col.gameObject.tag.Equals(p_tag)) {
             animator.SetBool("Bounce", false);
             p_controller.m_JumpForce = jumpForce; // Reset Jumpforce
         }
