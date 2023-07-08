@@ -35,8 +35,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-      if(col.gameObject.layer == 3) {
+      if(col.gameObject.layer == LayerMask.NameToLayer("Ground") 
+          || col.gameObject.layer == LayerMask.NameToLayer("Background")
+          || col.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
         animator.SetBool("Jumping", false);
       }
     }
+
+
 }
